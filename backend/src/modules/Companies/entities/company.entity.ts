@@ -4,8 +4,10 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
+import { User } from '@/modules/Users/entities/user.entity';
 import { CompanyStatus } from '@/modules/Companies/enums/company-status.enum';
 
 @Entity('companies')
@@ -40,4 +42,7 @@ export class Company {
 
   @UpdateDateColumn()
   updatedAt!: Date;
+
+  @OneToMany(() => User, (user) => user.company)
+  users!: User[];
 }

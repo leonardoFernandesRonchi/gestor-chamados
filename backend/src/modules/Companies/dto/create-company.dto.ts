@@ -5,11 +5,14 @@ import {
   IsOptional,
   IsString,
   Length,
+  ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
+import { UserStatus } from '@/modules/Users/enums/user.enums';
 import { CompanyStatus } from '@/modules/Companies/enums/company-status.enum';
 
-export class CreateCompanyDto {
+class CompanyDataDto {
   @IsString()
   @IsNotEmpty()
   name!: string;
@@ -32,4 +35,31 @@ export class CreateCompanyDto {
   @IsOptional()
   @IsEnum(CompanyStatus)
   status?: CompanyStatus;
+}
+
+class UserDataDto {
+  @IsString()
+  @IsNotEmpty()
+  name!: string;
+
+  @IsOptional()
+  @IsString()
+  phone?: string;
+
+  @IsEmail()
+  email!: string;
+
+  @IsOptional()
+  @IsEnum(UserStatus)
+  status?: UserStatus;
+}
+
+export class CreateCompanyDto {
+  @ValidateNested()
+  @Type(() => CompanyDataDto)
+  company!: CompanyDataDto;
+
+  @ValidateNested()
+  @Type(() => UserDataDto)
+  user!: UserDataDto;
 }
