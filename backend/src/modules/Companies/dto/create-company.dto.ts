@@ -6,6 +6,7 @@ import {
   IsString,
   Length,
   ValidateNested,
+  IsStrongPassword,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -48,6 +49,10 @@ class UserDataDto {
 
   @IsEmail()
   email!: string;
+
+  @IsString()
+  @IsStrongPassword()
+  password!: string;
 
   @IsOptional()
   @IsEnum(UserStatus)

@@ -25,6 +25,9 @@ export class User {
   @Column({ nullable: true })
   email!: string;
 
+  @Column({ nullable: false })
+  password!: string;
+
   @Column({
     type: 'enum',
     enum: UserStatus,

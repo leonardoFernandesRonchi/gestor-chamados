@@ -15,15 +15,20 @@ export class createUserDto {
   name!: string;
 
   @IsOptional()
-  phone!: string;
+  phone?: string;
 
   @IsString()
   @IsNotEmpty()
+  @IsEmail()
   email!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password!: string;
 
   @IsNotEmpty()
   @IsEnum(UserStatus)
-  status?: UserStatus;
+  status!: UserStatus;
 
   @IsString()
   @IsNotEmpty()
