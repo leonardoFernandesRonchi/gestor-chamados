@@ -10,11 +10,18 @@ import {
 
 import { UserStatus } from '../enums/user.enums';
 import { Company } from '@/modules/Companies/entities/company.entity';
+import { Department } from '@/modules/departments/entities/department.entity';
 
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
+
+  @Column({ type: 'uuid' })
+  company_id!: string;
+
+  @Column({ type: 'uuid' })
+  department_id!: string;
 
   @Column()
   name!: string;
@@ -38,6 +45,10 @@ export class User {
   @ManyToOne(() => Company, (company) => company.users)
   @JoinColumn({ name: 'company_id' })
   company!: Company;
+
+  @ManyToOne(() => Department, (department) => department.users)
+  @JoinColumn({ name: 'department_id' })
+  department!: Department;
 
   @CreateDateColumn()
   createdAt!: Date;

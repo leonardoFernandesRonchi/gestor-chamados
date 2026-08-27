@@ -8,10 +8,12 @@ import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
 import redisConfig from './config/redis.config';
 import { CompaniesModule } from '@/modules/Companies/companies.module';
+import { DepartmentsModule } from './modules/departments/departments.module';
 
 @Module({
   imports: [
     UsersModule,
+    DepartmentsModule,
     CompaniesModule,
     ConfigModule.forRoot({
       isGlobal: true,
@@ -28,6 +30,8 @@ import { CompaniesModule } from '@/modules/Companies/companies.module';
         synchronize: true,
       }),
     }),
+
+    DepartmentsModule,
   ],
 
   controllers: [AppController],

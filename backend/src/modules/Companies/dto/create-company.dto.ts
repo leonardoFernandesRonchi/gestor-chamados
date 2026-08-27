@@ -59,6 +59,12 @@ class UserDataDto {
   status?: UserStatus;
 }
 
+class DepartmentDataDto {
+  @IsString()
+  @IsNotEmpty()
+  name!: string;
+}
+
 export class CreateCompanyDto {
   @ValidateNested()
   @Type(() => CompanyDataDto)
@@ -67,4 +73,8 @@ export class CreateCompanyDto {
   @ValidateNested()
   @Type(() => UserDataDto)
   user!: UserDataDto;
+
+  @ValidateNested()
+  @Type(() => DepartmentDataDto)
+  department!: DepartmentDataDto;
 }

@@ -5,10 +5,13 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
 import { User } from '@/modules/Users/entities/user.entity';
 import { CompanyStatus } from '@/modules/Companies/enums/company-status.enum';
+import { Department } from '@/modules/departments/entities/department.entity';
 
 @Entity('companies')
 export class Company {
@@ -45,4 +48,7 @@ export class Company {
 
   @OneToMany(() => User, (user) => user.company)
   users!: User[];
+
+  @OneToMany(() => Department, (department) => department.company)
+  departments!: Department[];
 }

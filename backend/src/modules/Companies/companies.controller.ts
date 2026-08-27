@@ -1,5 +1,4 @@
-import { RolesGuard } from '@/auth/roles/roles.guard';
-import { Roles } from '@/auth/roles/roles.decorator';
+import { RolesGuard } from '@/Guards/roles/roles.guard';
 import { CompaniesService } from '@/modules/Companies/companies.service';
 import { CreateCompanyDto } from '@/modules/Companies/dto/create-company.dto';
 import { UpdateCompanyDto } from '@/modules/Companies/dto/update-company.dto';

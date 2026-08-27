@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 import { User } from '@/modules/Users/entities/user.entity';
 import { Company } from '@/modules/Companies/entities/company.entity';
+import { Department } from '@/modules/departments/entities/department.entity';
 import { CreateCompanyDto } from '@/modules/Companies/dto/create-company.dto';
 import { UpdateCompanyDto } from '@/modules/Companies/dto/update-company.dto';
 
@@ -15,13 +17,21 @@ export class CompaniesService {
   ) {}
   async create(dto: CreateCompanyDto) {
     return this.companiesRepository.manager.transaction(async (manager) => {
-      const company = manager.create(Company, dto['company']);
+      const company = manager.create(Company, dto.company);
 
       const savedCompany = await manager.save(company);
 
+      const department = await manager.create(Department, dto.department);
+
+      const savedDepartment = await manager.save(department);
+
+      const hashedPassword = await bcrypt.hash(dto.user.password, 10);
+
       const user = manager.create(User, {
-        ...dto['user'],
-        company_id: savedCompany,
+        ...dto.user,
+        password: hashedPassword,
+        company: savedCompany,
+        department: savedDepartment,
       });
       await manager.save(user);
 
