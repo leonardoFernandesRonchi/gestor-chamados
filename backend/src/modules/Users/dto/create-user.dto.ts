@@ -32,5 +32,5 @@ export class createUserDto {
 
   @IsString()
   @IsNotEmpty()
-  company_id!: string;
+  department_id!: string;
 }

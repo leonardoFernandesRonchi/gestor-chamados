@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
+import { UserStatus } from '@/modules/Users/enums/user.enums';
 import { User } from '@/modules/Users/entities/user.entity';
 import { Company } from '@/modules/Companies/entities/company.entity';
 import { Department } from '@/modules/departments/entities/department.entity';
@@ -32,6 +33,7 @@ export class CompaniesService {
         password: hashedPassword,
         company: savedCompany,
         department: savedDepartment,
+        status: UserStatus.OWNER,
       });
       await manager.save(user);
 
