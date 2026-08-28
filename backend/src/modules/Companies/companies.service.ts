@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
@@ -22,11 +22,24 @@ export class CompaniesService {
 
       const savedCompany = await manager.save(company);
 
-      const department = await manager.create(Department, dto.department);
+      const department = await manager.create(Department, {
+        ...dto.department,
+        company: savedCompany,
+      });
 
       const savedDepartment = await manager.save(department);
 
       const hashedPassword = await bcrypt.hash(dto.user.password, 10);
+
+      const userAlreadyExists = await manager.findOne(User, {
+        where: {
+          email: dto.user.email,
+        },
+      });
+
+      if (userAlreadyExists) {
+        throw new ConflictException('Usuário já existe');
+      }
 
       const user = manager.create(User, {
         ...dto.user,

@@ -17,10 +17,10 @@ export class DepartmentsService {
     private readonly CompaniesRepository: Repository<Company>,
   ) {}
 
-  async create(dto: CreateDepartmentDto) {
+  async create(dto: CreateDepartmentDto, user) {
     const company = await this.CompaniesRepository.findOne({
       where: {
-        id: dto.company_id,
+        id: user.companyId,
       },
     });
 

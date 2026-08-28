@@ -4,8 +4,4 @@ export class CreateDepartmentDto {
   @IsString()
   @IsNotEmpty()
   name!: string;
-
-  @IsString()
-  @IsNotEmpty()
-  company_id!: string;
 }

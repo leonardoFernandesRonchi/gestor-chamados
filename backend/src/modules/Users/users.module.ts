@@ -12,12 +12,12 @@ import { Department } from '@/modules/departments/entities/department.entity';
   imports: [
     TypeOrmModule.forFeature([User, Company, Department]),
 
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: {
-        expiresIn: '1h',
-      },
-    }),
+    // JwtModule.register({
+    //   secret: process.env.JWT_SECRET,
+    //   signOptions: {
+    //     expiresIn: '1h',
+    //   },
+    // }),
   ],
 
   controllers: [UsersController],

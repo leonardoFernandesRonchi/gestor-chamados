@@ -6,18 +6,27 @@ import {
   Patch,
   Param,
   Delete,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
 import { DepartmentsService } from './departments.service';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 import { UpdateDepartmentDto } from './dto/update-department.dto';
 
+import type { Request } from 'express';
+import { AuthGuard } from '@/Guards/Auth/auth.guard';
+
 @Controller('departments')
+@UseGuards(AuthGuard)
 export class DepartmentsController {
   constructor(private readonly departmentsService: DepartmentsService) {}
 
   @Post()
-  create(@Body() createDepartmentDto: CreateDepartmentDto) {
-    return this.departmentsService.create(createDepartmentDto);
+  create(
+    @Body() createDepartmentDto: CreateDepartmentDto,
+    @Req() request: Request,
+  ) {
+    return this.departmentsService.create(createDepartmentDto, request['user']);
   }
 
   // @Get()

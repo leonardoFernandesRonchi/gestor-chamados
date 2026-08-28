@@ -9,9 +9,12 @@ import databaseConfig from './config/database.config';
 import redisConfig from './config/redis.config';
 import { CompaniesModule } from '@/modules/Companies/companies.module';
 import { DepartmentsModule } from './modules/departments/departments.module';
+import { JwtModule } from '@nestjs/jwt';
+import { AuthModule } from '@/modules/Auth/auth.module';
 
 @Module({
   imports: [
+    AuthModule,
     UsersModule,
     DepartmentsModule,
     CompaniesModule,
