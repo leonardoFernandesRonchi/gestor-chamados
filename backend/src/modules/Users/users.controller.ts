@@ -6,9 +6,10 @@ import { loginDto } from '@/modules/Users/dto/login-dto';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@/Guards/Auth/auth.guard';
 import { RolesGuard } from '@/Guards/roles/roles.guard';
-import type { Request } from 'express';
 import { Roles } from '@/Guards/roles/roles.decorator';
 import { UserStatus } from '@/modules/Users/enums/user.enums';
+import { CurrentUser } from '@/Guards/Auth/auth.decorator';
+import type { AuthenticatedUser } from '@/Guards/Auth/authenticated.user';
 
 @Controller('users')
 export class UsersController {
@@ -17,8 +18,8 @@ export class UsersController {
   @Post()
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(UserStatus.OWNER, UserStatus.ADMIN)
-  create(@Body() dto: createUserDto, @Req() request: Request) {
-    return this.UsersService.create(dto, request['user']);
+  create(@Body() dto: createUserDto, @CurrentUser() user: AuthenticatedUser) {
+    return this.UsersService.create(dto, user);
   }
 
   @Post('login')

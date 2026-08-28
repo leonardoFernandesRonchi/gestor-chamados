@@ -18,6 +18,9 @@ export class Department {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
+  @Column({ type: 'uuid' })
+  company_id!: string;
+
   @ManyToOne(() => Company, (company) => company.departments)
   @JoinColumn({ name: 'company_id' })
   company!: Company;

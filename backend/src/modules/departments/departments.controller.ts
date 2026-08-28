@@ -1,43 +1,54 @@
 import {
   Controller,
   Get,
+  Put,
   Post,
   Body,
-  Patch,
   Param,
-  Delete,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import { DepartmentsService } from './departments.service';
 import { CreateDepartmentDto } from './dto/create-department.dto';
-import { UpdateDepartmentDto } from './dto/update-department.dto';
-
-import type { Request } from 'express';
 import { AuthGuard } from '@/Guards/Auth/auth.guard';
+import { UpdateDepartmentDto } from '@/modules/departments/dto/update-department.dto';
+import type { AuthenticatedUser } from '@/Guards/Auth/authenticated.user';
+import { CurrentUser } from '@/Guards/Auth/auth.decorator';
+import { RolesGuard } from '@/Guards/roles/roles.guard';
+import { UserStatus } from '@/modules/Users/enums/user.enums';
+import { Roles } from '@/Guards/roles/roles.decorator';
 
 @Controller('departments')
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard, RolesGuard)
 export class DepartmentsController {
   constructor(private readonly departmentsService: DepartmentsService) {}
 
   @Post()
   create(
     @Body() createDepartmentDto: CreateDepartmentDto,
-    @Req() request: Request,
+    @CurrentUser() user: AuthenticatedUser,
   ) {
-    return this.departmentsService.create(createDepartmentDto, request['user']);
+    return this.departmentsService.create(createDepartmentDto, user);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.departmentsService.findAll();
-  // }
+  @Put(':id')
+  @Roles(UserStatus.ADMIN, UserStatus.OWNER)
+  update(
+    @Param('id') id: string,
+    @Body() updateDepartmentDto: UpdateDepartmentDto,
+    @CurrentUser() user: AuthenticatedUser,
+  ) {
+    return this.departmentsService.update(id, updateDepartmentDto, user);
+  }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.departmentsService.findOne(id);
-  // }
+  @Get()
+  findAll(@CurrentUser() user: AuthenticatedUser) {
+    return this.departmentsService.getAll(user);
+  }
+
+  @Get(':id')
+  find(@Param('id') id: string, @CurrentUser() user: AuthenticatedUser) {
+    return this.departmentsService.findById(id, user);
+  }
 
   // @Patch(':id')
   // update(
