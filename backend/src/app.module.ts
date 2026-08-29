@@ -11,6 +11,7 @@ import { CompaniesModule } from '@/modules/Companies/companies.module';
 import { DepartmentsModule } from './modules/departments/departments.module';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from '@/modules/Auth/auth.module';
+import { CompanySettingsModule } from './modules/company_settings/company_settings.module';
 
 @Module({
   imports: [
@@ -35,6 +36,8 @@ import { AuthModule } from '@/modules/Auth/auth.module';
     }),
 
     DepartmentsModule,
+
+    CompanySettingsModule,
   ],
 
   controllers: [AppController],

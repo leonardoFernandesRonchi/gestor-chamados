@@ -6,7 +6,6 @@ import { UpdateCompanyDto } from '@/modules/Companies/dto/update-company.dto';
 import {
   Body,
   Controller,
-  Get,
   Param,
   Post,
   Put,
@@ -17,22 +16,22 @@ import {
 @Controller('companies')
 @UseGuards(RolesGuard)
 export class CompaniesController {
-  constructor(private readonly CompaniesService: CompaniesService) {}
+  constructor(private readonly companiesService: CompaniesService) {}
 
   @Post()
   create(@Body() dto: CreateCompanyDto) {
-    return this.CompaniesService.create(dto);
+    return this.companiesService.create(dto);
   }
 
   @Put(':id')
   // @Roles('owner', 'admin')
   update(@Param('id') id: string, @Body() dto: UpdateCompanyDto) {
-    return this.CompaniesService.update(id, dto);
+    return this.companiesService.update(id, dto);
   }
 
   @Delete(':id')
   // @Roles('owner', 'admin')
   delete(@Param('id') id: string) {
-    return this.CompaniesService.destroy(id);
+    return this.companiesService.destroy(id);
   }
 }

@@ -9,16 +9,7 @@ import { Company } from '@/modules/Companies/entities/company.entity';
 import { Department } from '@/modules/departments/entities/department.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([User, Company, Department]),
-
-    // JwtModule.register({
-    //   secret: process.env.JWT_SECRET,
-    //   signOptions: {
-    //     expiresIn: '1h',
-    //   },
-    // }),
-  ],
+  imports: [TypeOrmModule.forFeature([User, Company, Department])],
 
   controllers: [UsersController],
 

@@ -5,6 +5,7 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsUrl,
   Length,
 } from 'class-validator';
 import { UserStatus } from '../enums/user.enums';
