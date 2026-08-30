@@ -1,3 +1,4 @@
+import { Company } from '@/modules/Companies/entities/company.entity';
 import {
   CanActivate,
   ExecutionContext,
@@ -5,11 +6,18 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Request } from 'express';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(
+    private readonly jwtService: JwtService,
+
+    @InjectRepository(Company)
+    private readonly companiesRepository: Repository<Company>,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -19,7 +27,18 @@ export class AuthGuard implements CanActivate {
     }
     try {
       const payload = await this.jwtService.verifyAsync(token);
+
+      const company = await this.companiesRepository.findOne({
+        where: {
+          id: payload.companyId,
+        },
+      });
+
+      console.log(company);
       request['user'] = payload;
+
+      request['company'] = company;
+      console.log(company, payload);
     } catch {
       throw new UnauthorizedException();
     }

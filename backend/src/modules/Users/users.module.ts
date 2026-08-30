@@ -7,9 +7,13 @@ import { UsersController } from '@/modules/Users/users.controller';
 import { User } from './entities/user.entity';
 import { Company } from '@/modules/Companies/entities/company.entity';
 import { Department } from '@/modules/departments/entities/department.entity';
+import { FileUploadModule } from '@/modules/file-upload/file-upload.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Company, Department])],
+  imports: [
+    TypeOrmModule.forFeature([User, Company, Department]),
+    FileUploadModule,
+  ],
 
   controllers: [UsersController],
 

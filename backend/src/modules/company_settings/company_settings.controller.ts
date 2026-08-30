@@ -1,34 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { CompanySettingsService } from './company_settings.service';
 import { CreateCompanySettingDto } from './dto/create-company_setting.dto';
 import { UpdateCompanySettingDto } from './dto/update-company_setting.dto';
+import { CurrentCompany, CurrentUser } from '@/Guards/Auth/auth.decorator';
+import type { AuthenticatedCompany } from '@/Guards/Auth/authenticated.company';
+import type { AuthenticatedUser } from '@/Guards/Auth/authenticated.user';
+import { AuthGuard } from '@/Guards/Auth/auth.guard';
 
 @Controller('company-settings')
+@UseGuards(AuthGuard)
 export class CompanySettingsController {
-  constructor(private readonly companySettingsService: CompanySettingsService) {}
-
+  constructor(
+    private readonly companySettingsService: CompanySettingsService,
+  ) {}
   @Post()
-  create(@Body() createCompanySettingDto: CreateCompanySettingDto) {
-    return this.companySettingsService.create(createCompanySettingDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.companySettingsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.companySettingsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCompanySettingDto: UpdateCompanySettingDto) {
-    return this.companySettingsService.update(+id, updateCompanySettingDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.companySettingsService.remove(+id);
+  create(@CurrentCompany() company: AuthenticatedCompany) {
+    return company;
   }
 }

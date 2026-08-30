@@ -9,14 +9,17 @@ import { Company } from '@/modules/Companies/entities/company.entity';
 import { Department } from '@/modules/departments/entities/department.entity';
 import { CreateCompanyDto } from '@/modules/Companies/dto/create-company.dto';
 import { UpdateCompanyDto } from '@/modules/Companies/dto/update-company.dto';
+import { FileUploadService } from '@/modules/file-upload/file-upload.service';
 
 @Injectable()
 export class CompaniesService {
   constructor(
     @InjectRepository(Company)
     private readonly companiesRepository: Repository<Company>,
+
+    private readonly fileUploadService: FileUploadService,
   ) {}
-  async create(dto: CreateCompanyDto) {
+  async create(dto: CreateCompanyDto, avatar?: Express.Multer.File) {
     return this.companiesRepository.manager.transaction(async (manager) => {
       const company = manager.create(Company, dto.company);
 
@@ -26,6 +29,14 @@ export class CompaniesService {
         ...dto.department,
         company: savedCompany,
       });
+
+      if (avatar) {
+        this.fileUploadService.validateFile(avatar);
+      }
+
+      const avatarUrl = avatar
+        ? this.fileUploadService.getFileUrl(avatar)
+        : undefined;
 
       const savedDepartment = await manager.save(department);
 
@@ -47,6 +58,7 @@ export class CompaniesService {
         company: savedCompany,
         department: savedDepartment,
         status: UserStatus.OWNER,
+        avatar_url: avatarUrl,
       });
       await manager.save(user);
 

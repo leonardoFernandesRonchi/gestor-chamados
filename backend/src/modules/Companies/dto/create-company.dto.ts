@@ -8,7 +8,7 @@ import {
   ValidateNested,
   IsStrongPassword,
 } from 'class-validator';
-import { Type } from 'class-transformer';
+import { Transform, plainToInstance } from 'class-transformer';
 
 import { UserStatus } from '@/modules/Users/enums/user.enums';
 import { CompanyStatus } from '@/modules/Companies/enums/company-status.enum';
@@ -66,15 +66,30 @@ class DepartmentDataDto {
 }
 
 export class CreateCompanyDto {
+  @Transform(({ value }) =>
+    plainToInstance(
+      CompanyDataDto,
+      typeof value === 'string' ? JSON.parse(value) : value,
+    ),
+  )
   @ValidateNested()
-  @Type(() => CompanyDataDto)
   company!: CompanyDataDto;
 
+  @Transform(({ value }) =>
+    plainToInstance(
+      UserDataDto,
+      typeof value === 'string' ? JSON.parse(value) : value,
+    ),
+  )
   @ValidateNested()
-  @Type(() => UserDataDto)
   user!: UserDataDto;
 
+  @Transform(({ value }) =>
+    plainToInstance(
+      DepartmentDataDto,
+      typeof value === 'string' ? JSON.parse(value) : value,
+    ),
+  )
   @ValidateNested()
-  @Type(() => DepartmentDataDto)
   department!: DepartmentDataDto;
 }

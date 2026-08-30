@@ -6,6 +6,8 @@ import {
   Body,
   Param,
   UseGuards,
+  Req,
+  Request,
 } from '@nestjs/common';
 import { DepartmentsService } from './departments.service';
 import { CreateDepartmentDto } from './dto/create-department.dto';
@@ -23,9 +25,11 @@ export class DepartmentsController {
   constructor(private readonly departmentsService: DepartmentsService) {}
 
   @Post()
+  @Roles(UserStatus.ADMIN, UserStatus.OWNER)
   create(
     @Body() createDepartmentDto: CreateDepartmentDto,
     @CurrentUser() user: AuthenticatedUser,
+    @Request() request: any,
   ) {
     return this.departmentsService.create(createDepartmentDto, user);
   }

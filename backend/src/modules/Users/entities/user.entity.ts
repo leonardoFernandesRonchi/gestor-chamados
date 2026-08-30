@@ -27,6 +27,9 @@ export class User {
   name!: string;
 
   @Column({ nullable: true })
+  avatar_url?: string;
+
+  @Column({ nullable: true })
   phone!: string;
 
   @Column({ nullable: true })

@@ -12,6 +12,7 @@ import { DepartmentsModule } from './modules/departments/departments.module';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from '@/modules/Auth/auth.module';
 import { CompanySettingsModule } from './modules/company_settings/company_settings.module';
+import { FileUploadModule } from './modules/file-upload/file-upload.module';
 
 @Module({
   imports: [
@@ -38,6 +39,8 @@ import { CompanySettingsModule } from './modules/company_settings/company_settin
     DepartmentsModule,
 
     CompanySettingsModule,
+
+    FileUploadModule,
   ],
 
   controllers: [AppController],

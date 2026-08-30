@@ -7,12 +7,13 @@ import {
   OneToMany,
   ManyToOne,
   JoinColumn,
+  OneToOne,
 } from 'typeorm';
 
 import { User } from '@/modules/Users/entities/user.entity';
 import { CompanyStatus } from '@/modules/Companies/enums/company-status.enum';
 import { Department } from '@/modules/departments/entities/department.entity';
-
+import { CompanySetting } from '@/modules/company_settings/entities/company_setting.entity';
 @Entity('companies')
 export class Company {
   @PrimaryGeneratedColumn('uuid')
@@ -51,4 +52,7 @@ export class Company {
 
   @OneToMany(() => Department, (department) => department.company)
   departments!: Department[];
+
+  @OneToOne(() => CompanySetting, (companySetting) => companySetting.company)
+  company_settings!: CompanySetting;
 }
