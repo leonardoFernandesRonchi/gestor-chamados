@@ -13,6 +13,12 @@ export class FileUploadService {
       throw new BadRequestException('Invalid file type');
     }
 
+    const maxSize = 5 * 1024 * 1024;
+
+    if (file?.size > maxSize) {
+      throw new BadRequestException('Arquivo muito grande');
+    }
+
     return file;
   }
 

@@ -84,7 +84,6 @@ export class UsersService {
   }
 
   async login(email: string, password: string) {
-    console.log('chegou aqui');
     const user = await this.usersRepository.findOne({
       where: { email },
       relations: {

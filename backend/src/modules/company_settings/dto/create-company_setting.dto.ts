@@ -1,14 +1,7 @@
-import { IsOptional, IsString } from 'class-validator';
+import { plainToInstance, Transform } from 'class-transformer';
+import { IsOptional, IsString, ValidateNested } from 'class-validator';
 
-export class CreateCompanySettingDto {
-  @IsString()
-  @IsOptional()
-  logo_url;
-
-  @IsString()
-  @IsOptional()
-  favicon_url;
-
+export class CompanySettingDto {
   @IsString()
   @IsOptional()
   cor_primaria;
@@ -16,4 +9,15 @@ export class CreateCompanySettingDto {
   @IsString()
   @IsOptional()
   cor_secundaria;
+}
+
+export class CreateCompanySettingDto {
+  @Transform(({ value }) =>
+    plainToInstance(
+      CompanySettingDto,
+      typeof value === 'string' ? JSON.parse(value) : value,
+    ),
+  )
+  @ValidateNested()
+  company_setting!: CompanySettingDto;
 }
