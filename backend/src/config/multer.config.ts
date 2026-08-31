@@ -1,3 +1,4 @@
+import { FileTypeValidator } from '@nestjs/common';
 import { diskStorage } from 'multer';
 import { join } from 'path';
 
