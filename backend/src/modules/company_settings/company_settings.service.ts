@@ -62,4 +62,49 @@ export class CompanySettingsService {
 
     return companySettings;
   }
+
+  async update(
+    dto: CreateCompanySettingDto,
+    company: Company,
+    files?: Express.Multer.File[],
+  ) {
+    const companySettings = await this.companiesSettingsRepository.findOne({
+      where: {
+        company_id: company.id,
+      },
+    });
+
+    if (!companySettings) {
+      throw new NotFoundException('Configurações da empresa não encontradas');
+    }
+
+    const logo = files?.['logo'][0];
+    const favicon = files?.['favicon'][0];
+
+    const faviconUrl = favicon
+      ? this.fileUploadService.getFileUrl(favicon)
+      : undefined;
+
+    const logoUrl = logo ? this.fileUploadService.getFileUrl(logo) : undefined;
+
+    const updatedCompanySettings = {
+      ...companySettings,
+      cor_primaria: dto.company_setting.cor_primaria,
+      cor_secundaria: dto.company_setting.cor_secundaria,
+      logo_url: logoUrl || companySettings.logo_url,
+      favicon_url: faviconUrl || companySettings.favicon_url,
+    };
+
+    Object.assign(companySettings, updatedCompanySettings);
+
+    return await this.companiesSettingsRepository.save(companySettings);
+  }
+
+  async findById(companyId: string) {
+    return await this.companiesSettingsRepository.findOne({
+      where: {
+        company_id: companyId,
+      },
+    });
+  }
 }
