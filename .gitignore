@@ -1,9 +1,55 @@
+# IDE
+.idea/
+
 # Backend
 backend/node_modules/
 backend/dist/
 backend/.env
 backend/.env.*
 !backend/.env.example
+
+# Root env
 .env
 
-uploads
+# Uploads
+uploads/
+
+# Mobile dependencies
+mobile/node_modules/
+
+# Expo
+mobile/.expo/
+mobile/dist/
+mobile/web-build/
+mobile/expo-env.d.ts
+
+# Native
+mobile/.kotlin/
+mobile/*.orig.*
+mobile/*.jks
+mobile/*.p8
+mobile/*.p12
+mobile/*.key
+mobile/*.mobileprovision
+
+# Metro
+mobile/.metro-health-check*
+
+# Debug
+mobile/npm-debug.*
+mobile/yarn-debug.*
+mobile/yarn-error.*
+
+# macOS
+mobile/.DS_Store
+mobile/*.pem
+
+# Local env
+mobile/.env*.local
+
+# TypeScript
+mobile/*.tsbuildinfo
+
+# Generated native folders
+**/ios/
+**/android/
