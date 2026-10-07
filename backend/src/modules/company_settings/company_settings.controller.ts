@@ -10,6 +10,7 @@ import {
   UseInterceptors,
   UploadedFile,
   UploadedFiles,
+  Put,
 } from '@nestjs/common';
 import { CompanySettingsService } from './company_settings.service';
 import { CreateCompanySettingDto } from './dto/create-company_setting.dto';
@@ -40,5 +41,20 @@ export class CompanySettingsController {
     @UploadedFiles() files?: Express.Multer.File[],
   ) {
     return this.companySettingsService.create(dto, company, files);
+  }
+
+  @Put()
+  @UseInterceptors(FileFieldsInterceptor(CompanySettingsUploads, MulterConfig))
+  update(
+    @Body() dto: CreateCompanySettingDto,
+    @CurrentCompany() company,
+    @UploadedFiles() files?: Express.Multer.File[],
+  ) {
+    return this.companySettingsService.update(dto, company, files);
+  }
+
+  @Get(':id')
+  findById(@CurrentCompany() company) {
+    return this.companySettingsService.findById(company.id);
   }
 }
