@@ -10,6 +10,7 @@ import {
 import Colors from "@src/constants/colors";
 
 type CardProps = {
+  titleIcon?: React.ReactNode;
   title?: string;
   content?: string;
   button?: boolean;
@@ -21,6 +22,7 @@ type CardProps = {
 };
 
 const Card = ({
+  titleIcon,
   title,
   content,
   button,
@@ -32,7 +34,11 @@ const Card = ({
 }: CardProps) => {
   return (
     <View style={[styles.card, style]}>
-      {title && <Text style={[styles.title, titleStyle]}>{title}</Text>}
+      <View style={styles.box}>
+        {titleIcon && <View style={[styles.titleIcon]}>{titleIcon}</View>}
+        {title && <Text style={[styles.title, titleStyle]}>{title}</Text>}
+      </View>
+
       {content && <Text style={[styles.content, contentStyle]}>{content}</Text>}
       {button && <Text style={styles.button}>{buttonText}</Text>}
       {children}
@@ -41,6 +47,16 @@ const Card = ({
 };
 
 const styles = StyleSheet.create({
+  box: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 10,
+  },
+  titleIcon: {
+    width: 30,
+    height: 30,
+    marginBottom: 10,
+  },
   card: {
     display: "flex",
     backgroundColor: Colors.backgroundCardGray,

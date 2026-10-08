@@ -11,12 +11,13 @@ import Colors from "@src/constants/colors";
 type CardProps = {
   text: string;
   style?: StyleProp<ViewStyle>;
+  onPressFunction?: () => void;
   children?: React.ReactNode;
 };
 
-const Button = ({ text, style, children }: CardProps) => {
+const Button = ({ text, style, onPressFunction, children }: CardProps) => {
   return (
-    <Pressable style={[styles.button, style]}>
+    <Pressable style={[styles.button, style]} onPress={onPressFunction}>
       <Text style={styles.text}>{text}</Text>
       {children}
     </Pressable>

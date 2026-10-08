@@ -3,8 +3,15 @@ import { StyleSheet, View, Text } from "react-native";
 import Colors from "@src/constants/colors";
 import { Card, Button } from "@src/components";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
+import { useNavigation } from "@react-navigation/native";
+import { AppRoutesProps } from "@src/navigation/AppRoutes";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 const Home = () => {
+  type navigationProps = NativeStackNavigationProp<AppRoutesProps>;
+
+  const navigation = useNavigation<navigationProps>();
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Chamados</Text>
@@ -35,7 +42,10 @@ const Home = () => {
             <Text>Integração com outros serviços</Text>
           </View>
 
-          <Button text="Assinar agora" />
+          <Button
+            text="Assinar agora"
+            onPressFunction={() => navigation.navigate("CreateAccount")}
+          />
         </View>
       </Card>
 
@@ -81,6 +91,7 @@ const Home = () => {
           <Button
             text="Assinar agora"
             style={{ backgroundColor: Colors.buttonBlue }}
+            onPressFunction={() => navigation.navigate("CreateAccount")}
           />
         </View>
       </Card>

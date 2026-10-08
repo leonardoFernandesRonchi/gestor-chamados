@@ -10,8 +10,9 @@ const colors = {
   backgroundSecondary: "#FDFDFD",
   backgroundCardGray: "#ECEEF1",
   backgroundCardBlue: "#1A2B3C",
-
   buttonBlue: "#041527",
+
+  inputColor: "#F2F4F7",
 };
 
 export default colors;
