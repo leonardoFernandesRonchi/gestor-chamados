@@ -1,11 +1,20 @@
 import { StyleSheet, View, ScrollView, Text } from "react-native";
-import { Card, Input } from "@src/components";
+import { Card, Input, Button } from "@src/components";
 import Colors from "@src/constants/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useNavigation } from "@react-navigation/native";
+import { AppRoutesProps } from "@src/navigation/AppRoutes";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 const CreateAccount = () => {
+  type navigationProps = NativeStackNavigationProp<AppRoutesProps>;
+
+  const navigation = useNavigation<navigationProps>();
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.scrollContent}
+    >
       <View style={styles.box}>
         <Text style={styles.title}>Seja bem vindo!</Text>
         <Text>Vamos realizar as configurações iniciais.</Text>
@@ -17,7 +26,7 @@ const CreateAccount = () => {
         style={{
           width: "100%",
           padding: 20,
-          height: "30%",
+          height: "25%",
           backgroundColor: Colors.white,
         }}
       >
@@ -37,10 +46,10 @@ const CreateAccount = () => {
         titleIcon={<Ionicons name="business" size={25} color="black" />}
         style={{
           marginTop: "10%",
-          marginBottom: "20%",
+          marginBottom: "3%",
           width: "100%",
-          height: "55%",
-          padding: 20,
+          height: "50%",
+          padding: 15,
           backgroundColor: Colors.white,
         }}
       >
@@ -54,6 +63,10 @@ const CreateAccount = () => {
 
         <Input label="Confirmação de senha" placeholder="********" />
       </Card>
+      <Button
+        text="Continuar"
+        onPressFunction={() => navigation.navigate("CreateAccountPartTwo")}
+      />
     </ScrollView>
   );
 };
@@ -63,6 +76,9 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: Colors.background,
+  },
+  scrollContent: {
+    paddingBottom: 40,
   },
   box: {
     display: "flex",
