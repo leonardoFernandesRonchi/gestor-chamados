@@ -1,5 +1,5 @@
 import { StyleSheet, View, ScrollView, Text } from "react-native";
-import { Card, Input, Button } from "@src/components";
+import { Card, Input, Button, ErrorMessage } from "@src/components";
 import Colors from "@src/constants/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
@@ -82,6 +82,7 @@ const CreateAccount = () => {
           onChangeText={setDepartmentName}
           placeholder="Departamento de Recursos Humanos"
         />
+        <ErrorMessage message={errors.departmentName} />
 
         <Input
           label="Código do departamento"
@@ -89,6 +90,7 @@ const CreateAccount = () => {
           onChangeText={setDepartmentCode}
           placeholder="ADM-01, TI-1, RH-01"
         />
+        <ErrorMessage message={errors.departmentCode} />
       </Card>
 
       <Card
@@ -98,7 +100,7 @@ const CreateAccount = () => {
           marginTop: "10%",
           marginBottom: "3%",
           width: "100%",
-          height: "50%",
+          height: "53%",
           padding: 15,
           backgroundColor: Colors.white,
         }}
@@ -109,13 +111,14 @@ const CreateAccount = () => {
           onChangeText={setUserName}
           placeholder="John Doe"
         />
-
+        <ErrorMessage message={errors.userName} />
         <Input
           label="Número de telefone"
           value={userPhone}
           onChangeText={setUserPhone}
           placeholder="(11) 99999-9999"
         />
+        <ErrorMessage message={errors.userPhone} />
 
         <Input
           label="E-mail"
@@ -123,6 +126,7 @@ const CreateAccount = () => {
           onChangeText={setUserEmail}
           placeholder="john.doe@example.com"
         />
+        <ErrorMessage message={errors.userEmail} />
 
         <Input
           label="Senha"
@@ -130,6 +134,7 @@ const CreateAccount = () => {
           onChangeText={setUserPassword}
           placeholder="********"
         />
+        <ErrorMessage message={errors.userPassword} />
 
         <Input
           label="Confirmação de senha"
@@ -137,6 +142,7 @@ const CreateAccount = () => {
           onChangeText={setConfirmPassword}
           placeholder="********"
         />
+        <ErrorMessage message={errors.confirmPassword} />
       </Card>
       <Button text="Continuar" onPressFunction={handleContinue} />
     </ScrollView>
