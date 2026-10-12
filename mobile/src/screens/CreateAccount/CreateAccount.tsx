@@ -37,7 +37,9 @@ const CreateAccount = () => {
 
       setErrors({});
 
-      navigation.navigate("CreateAccountPartTwo");
+      navigation.navigate("CreateAccountPartTwo", {
+        formProps: data,
+      });
     } catch (error) {
       if (error instanceof ValidationError) {
         const validationErrors: Record<string, string> = {};

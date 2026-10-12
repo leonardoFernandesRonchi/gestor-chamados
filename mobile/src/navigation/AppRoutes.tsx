@@ -6,7 +6,9 @@ export type AppRoutesProps = {
   Home: undefined;
   Login: undefined;
   CreateAccount: undefined;
-  CreateAccountPartTwo: undefined;
+  CreateAccountPartTwo: {
+    formProps: Record<string, unknown>;
+  };
 
   navigate: () => void;
 };
