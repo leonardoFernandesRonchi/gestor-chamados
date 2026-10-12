@@ -4,17 +4,30 @@ import { Colors } from "@src/constants";
 
 export type AppRoutesProps = {
   Home: undefined;
+  Login: undefined;
   CreateAccount: undefined;
   CreateAccountPartTwo: undefined;
 
   navigate: () => void;
 };
 
-import { CreateAccount, CreateAccountPartTwo, Home } from "@src/screens";
+import { CreateAccount, CreateAccountPartTwo, Home, Login } from "@src/screens";
 const AppRoutes = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Login">
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{
+          title: "Realize seu login",
+          headerStyle: {
+            backgroundColor: Colors.backgroundNavbar,
+          },
+          headerTitleAlign: "center",
+        }}
+      />
+
       <Stack.Screen
         name="Home"
         component={Home}
