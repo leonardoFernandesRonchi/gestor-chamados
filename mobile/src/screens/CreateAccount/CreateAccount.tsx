@@ -4,9 +4,13 @@ import Colors from "@src/constants/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { AppRoutesProps } from "@src/navigation/AppRoutes";
+import schema from "./schema";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useState } from "react";
+import { ValidationError } from "yup";
+
 const CreateAccount = () => {
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [userPhone, setUserPhone] = useState("");
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -15,18 +19,39 @@ const CreateAccount = () => {
   const [departmentName, setDepartmentName] = useState("");
   const [departmentCode, setDepartmentCode] = useState("");
 
-  console.log(
-    userPhone,
-    userName,
-    userEmail,
-    userPassword,
-    confirmPassword,
-    departmentName,
-    departmentCode,
-  );
+  const handleContinue = async () => {
+    const data = {
+      departmentName,
+      departmentCode,
+      userName,
+      userPhone,
+      userEmail,
+      userPassword,
+      confirmPassword,
+    };
 
-  console.log("testeee");
-  console.log("teste");
+    try {
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      setErrors({});
+
+      navigation.navigate("CreateAccountPartTwo");
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        const validationErrors: Record<string, string> = {};
+
+        error.inner.forEach((item) => {
+          if (item.path) {
+            validationErrors[item.path] = item.message;
+          }
+        });
+
+        setErrors(validationErrors);
+      }
+    }
+  };
 
   type navigationProps = NativeStackNavigationProp<AppRoutesProps>;
 
@@ -113,10 +138,7 @@ const CreateAccount = () => {
           placeholder="********"
         />
       </Card>
-      <Button
-        text="Continuar"
-        onPressFunction={() => navigation.navigate("CreateAccountPartTwo")}
-      />
+      <Button text="Continuar" onPressFunction={handleContinue} />
     </ScrollView>
   );
 };
