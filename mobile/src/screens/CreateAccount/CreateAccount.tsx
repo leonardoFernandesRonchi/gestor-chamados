@@ -5,8 +5,29 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { AppRoutesProps } from "@src/navigation/AppRoutes";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-
+import { useState } from "react";
 const CreateAccount = () => {
+  const [userPhone, setUserPhone] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [departmentName, setDepartmentName] = useState("");
+  const [departmentCode, setDepartmentCode] = useState("");
+
+  console.log(
+    userPhone,
+    userName,
+    userEmail,
+    userPassword,
+    confirmPassword,
+    departmentName,
+    departmentCode,
+  );
+
+  console.log("testeee");
+  console.log("teste");
+
   type navigationProps = NativeStackNavigationProp<AppRoutesProps>;
 
   const navigation = useNavigation<navigationProps>();
@@ -32,11 +53,15 @@ const CreateAccount = () => {
       >
         <Input
           label="Nome do departamento"
+          value={departmentName}
+          onChangeText={setDepartmentName}
           placeholder="Departamento de Recursos Humanos"
         />
 
         <Input
           label="Código do departamento"
+          value={departmentCode}
+          onChangeText={setDepartmentCode}
           placeholder="ADM-01, TI-1, RH-01"
         />
       </Card>
@@ -53,15 +78,40 @@ const CreateAccount = () => {
           backgroundColor: Colors.white,
         }}
       >
-        <Input label="Nome Completo" placeholder="John Doe" />
+        <Input
+          label="Nome Completo"
+          value={userName}
+          onChangeText={setUserName}
+          placeholder="John Doe"
+        />
 
-        <Input label="Número de telefone" placeholder="(11) 99999-9999" />
+        <Input
+          label="Número de telefone"
+          value={userPhone}
+          onChangeText={setUserPhone}
+          placeholder="(11) 99999-9999"
+        />
 
-        <Input label="E-mail" placeholder="john.doe@example.com" />
+        <Input
+          label="E-mail"
+          value={userEmail}
+          onChangeText={setUserEmail}
+          placeholder="john.doe@example.com"
+        />
 
-        <Input label="Senha" placeholder="********" />
+        <Input
+          label="Senha"
+          value={userPassword}
+          onChangeText={setUserPassword}
+          placeholder="********"
+        />
 
-        <Input label="Confirmação de senha" placeholder="********" />
+        <Input
+          label="Confirmação de senha"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          placeholder="********"
+        />
       </Card>
       <Button
         text="Continuar"
