@@ -7,7 +7,9 @@ type InputProps = {
   label?: string;
   placeholder?: string;
   value?: string;
-  onChangeText?: (text: string) => void;
+  numeric?: boolean;
+  secureTextEntry?: boolean;
+  onChangeText: (text: string) => void;
 };
 
 const Input = ({
@@ -15,6 +17,8 @@ const Input = ({
   label,
   placeholder,
   value,
+  numeric,
+  secureTextEntry = false,
   onChangeText,
 }: InputProps) => {
   return (
@@ -26,8 +30,13 @@ const Input = ({
 
         <TextInput
           placeholder={placeholder}
+          secureTextEntry={secureTextEntry}
           value={value}
-          onChangeText={onChangeText}
+          onChangeText={
+            numeric
+              ? (text) => onChangeText(text.replace(/[^0-9]/g, ""))
+              : onChangeText
+          }
           style={styles.input}
         />
       </View>

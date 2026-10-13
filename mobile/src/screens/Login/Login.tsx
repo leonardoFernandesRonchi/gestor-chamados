@@ -9,7 +9,11 @@ import { useNavigation } from "@react-navigation/native";
 import { AppRoutesProps } from "@src/navigation/AppRoutes";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
+import { useState } from "react";
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   type navigationProps = NativeStackNavigationProp<AppRoutesProps>;
 
   const navigation = useNavigation<navigationProps>();
@@ -33,12 +37,15 @@ const Login = () => {
           icon={<MaterialIcons name="email" size={20} />}
           label="E-mail de trabalho"
           placeholder="john.doe@example.com"
+          onChangeText={setEmail}
         />
 
         <Input
           icon={<MaterialIcons name="lock" size={20} />}
           label="Senha"
           placeholder="********"
+          secureTextEntry
+          onChangeText={setPassword}
         />
 
         <Button

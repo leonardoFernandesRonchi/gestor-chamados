@@ -119,6 +119,7 @@ const CreateAccount = () => {
           value={userPhone}
           onChangeText={setUserPhone}
           placeholder="(11) 99999-9999"
+          numeric
         />
         <ErrorMessage message={errors.userPhone} />
 
@@ -135,6 +136,7 @@ const CreateAccount = () => {
           value={userPassword}
           onChangeText={setUserPassword}
           placeholder="********"
+          secureTextEntry
         />
         <ErrorMessage message={errors.userPassword} />
 
@@ -143,6 +145,7 @@ const CreateAccount = () => {
           value={confirmPassword}
           onChangeText={setConfirmPassword}
           placeholder="********"
+          secureTextEntry
         />
         <ErrorMessage message={errors.confirmPassword} />
       </Card>

@@ -2,14 +2,37 @@ import { StyleSheet, View, ScrollView, Text } from "react-native";
 import { Card, Input, Button } from "@src/components";
 import Colors from "@src/constants/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { AppRoutesProps } from "@src/navigation/AppRoutes";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useState } from "react";
+import { companiesService, usersService } from "@src/services";
 
 const CreateAccountPartTwo = () => {
   type navigationProps = NativeStackNavigationProp<AppRoutesProps>;
 
   const navigation = useNavigation<navigationProps>();
+
+  const route = useRoute<RouteProp<AppRoutesProps, "CreateAccountPartTwo">>();
+
+  const formProps = route.params.formProps;
+
+  const [companyName, setCompanyName] = useState("");
+  const [cnpj, setCnpj] = useState("");
+  const [companyEmail, setCompanyEmail] = useState("");
+
+  console.log("chegou aqui");
+  console.log(formProps);
+
+  const handleContinue = async () => {
+    try {
+      const response = await companiesService.create({
+        companyEmail: companyEmail,
+        companyName: companyName,
+        cnpj: cnpj,
+      });
+    } catch (error) {}
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -29,11 +52,23 @@ const CreateAccountPartTwo = () => {
           backgroundColor: Colors.white,
         }}
       >
-        <Input label="Nome da empresa" placeholder="Nome da empresa" />
+        <Input
+          onChangeText={setCompanyName}
+          label="Nome da empresa"
+          placeholder="Nome da empresa"
+        />
 
-        <Input label="CNPJ" placeholder="00.000.000/0000-00" />
+        <Input
+          onChangeText={setCnpj}
+          label="CNPJ"
+          placeholder="00.000.000/0000-00"
+        />
 
-        <Input label="E-mail da empresa" placeholder="empresa@exemplo.com" />
+        <Input
+          onChangeText={setCompanyEmail}
+          label="E-mail da empresa"
+          placeholder="empresa@exemplo.com"
+        />
       </Card>
 
       <Button
