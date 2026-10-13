@@ -20,6 +20,7 @@ const CreateAccountPartTwo = () => {
   const [companyName, setCompanyName] = useState("");
   const [cnpj, setCnpj] = useState("");
   const [companyEmail, setCompanyEmail] = useState("");
+  const [companyPhone, setCompanyPhone] = useState("");
 
   console.log("chegou aqui");
   console.log(formProps);
@@ -29,15 +30,25 @@ const CreateAccountPartTwo = () => {
       const response = await companiesService.create({
         companyEmail: companyEmail,
         companyName: companyName,
+        companyPhone: companyPhone,
+
         cnpj: cnpj,
+        userName: formProps.userName,
+        userPassword: formProps.userPassword,
+        userEmail: formProps.userEmail,
+        userPhone: formProps.userPhone,
+
+        departmentName: formProps.departmentName,
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <ScrollView style={styles.container}>
       <View style={styles.box}>
-        <Text style={styles.title}>Detalhe das empresa</Text>
+        <Text style={styles.title}>Detalhes das empresa</Text>
         <Text>Vamos realizar as configurações da empresa.</Text>
       </View>
 
@@ -65,16 +76,19 @@ const CreateAccountPartTwo = () => {
         />
 
         <Input
+          onChangeText={setCompanyPhone}
+          label="Número"
+          placeholder="11 99999-9999"
+        />
+
+        <Input
           onChangeText={setCompanyEmail}
           label="E-mail da empresa"
           placeholder="empresa@exemplo.com"
         />
       </Card>
 
-      <Button
-        text="Continuar"
-        onPressFunction={() => navigation.navigate("CreateAccount")}
-      />
+      <Button text="Continuar" onPressFunction={handleContinue} />
     </ScrollView>
   );
 };

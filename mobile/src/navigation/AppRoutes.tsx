@@ -2,12 +2,14 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { Colors } from "@src/constants";
 
+import { CreateAccountFormProps } from "@src/types/CreateAccountFormProps";
+
 export type AppRoutesProps = {
   Home: undefined;
   Login: undefined;
   CreateAccount: undefined;
   CreateAccountPartTwo: {
-    formProps: Record<string, unknown>;
+    formProps: CreateAccountFormProps;
   };
 
   navigate: () => void;
