@@ -19,9 +19,12 @@ const schema = yup.object({
 
   userPassword: yup
     .string()
+    .required("A senha é obrigatória")
     .min(8, "A senha deve ter pelo menos 8 caracteres")
-    .required("Informe sua senha"),
-
+    .matches(/[a-z]/, "A senha deve conter uma letra minúscula")
+    .matches(/[A-Z]/, "A senha deve conter uma letra maiúscula")
+    .matches(/[0-9]/, "A senha deve conter um número")
+    .matches(/[^A-Za-z0-9]/, "A senha deve conter um símbolo"),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("userPassword")], "As senhas não coincidem")

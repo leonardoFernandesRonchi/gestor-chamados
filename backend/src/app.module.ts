@@ -22,6 +22,7 @@ import { FileUploadModule } from './modules/file-upload/file-upload.module';
     CompaniesModule,
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: '../.env',
       load: [appConfig, databaseConfig, redisConfig],
     }),
 

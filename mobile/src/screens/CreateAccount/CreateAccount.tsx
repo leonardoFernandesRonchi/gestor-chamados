@@ -1,4 +1,10 @@
-import { StyleSheet, View, ScrollView, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  Text,
+  KeyboardAvoidingView,
+} from "react-native";
 import { Card, Input, Button, ErrorMessage } from "@src/components";
 import Colors from "@src/constants/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -59,98 +65,104 @@ const CreateAccount = () => {
 
   const navigation = useNavigation<navigationProps>();
   return (
-    <ScrollView
-      style={styles.container}
-      contentContainerStyle={styles.scrollContent}
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={"padding"}
+      keyboardVerticalOffset={0}
     >
-      <View style={styles.box}>
-        <Text style={styles.title}>Seja bem vindo!</Text>
-        <Text>Vamos realizar as configurações iniciais.</Text>
-      </View>
-
-      <Card
-        title="Primeiro Departamento"
-        titleIcon={<Ionicons name="business" size={25} color="black" />}
-        style={{
-          width: "100%",
-          padding: 20,
-          height: "25%",
-          backgroundColor: Colors.white,
-        }}
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.scrollContent}
       >
-        <Input
-          label="Nome do departamento"
-          value={departmentName}
-          onChangeText={setDepartmentName}
-          placeholder="Departamento de Recursos Humanos"
-        />
-        <ErrorMessage message={errors.departmentName} />
+        <View style={styles.box}>
+          <Text style={styles.title}>Seja bem vindo!</Text>
+          <Text>Vamos realizar as configurações iniciais.</Text>
+        </View>
 
-        <Input
-          label="Código do departamento"
-          value={departmentCode}
-          onChangeText={setDepartmentCode}
-          placeholder="ADM-01, TI-1, RH-01"
-        />
-        <ErrorMessage message={errors.departmentCode} />
-      </Card>
+        <Card
+          title="Primeiro Departamento"
+          titleIcon={<Ionicons name="business" size={25} color="black" />}
+          style={{
+            width: "100%",
+            padding: 20,
+            height: "25%",
+            backgroundColor: Colors.white,
+          }}
+        >
+          <Input
+            label="Nome do departamento"
+            value={departmentName}
+            onChangeText={setDepartmentName}
+            placeholder="Departamento de Recursos Humanos"
+          />
+          <ErrorMessage message={errors.departmentName} />
 
-      <Card
-        title="Administrador"
-        titleIcon={<Ionicons name="business" size={25} color="black" />}
-        style={{
-          marginTop: "10%",
-          marginBottom: "3%",
-          width: "100%",
-          height: "53%",
-          padding: 15,
-          backgroundColor: Colors.white,
-        }}
-      >
-        <Input
-          label="Nome Completo"
-          value={userName}
-          onChangeText={setUserName}
-          placeholder="John Doe"
-        />
-        <ErrorMessage message={errors.userName} />
-        <Input
-          label="Número de telefone"
-          value={userPhone}
-          onChangeText={setUserPhone}
-          placeholder="(11) 99999-9999"
-          numeric
-        />
-        <ErrorMessage message={errors.userPhone} />
+          <Input
+            label="Código do departamento"
+            value={departmentCode}
+            onChangeText={setDepartmentCode}
+            placeholder="ADM-01, TI-1, RH-01"
+          />
+          <ErrorMessage message={errors.departmentCode} />
+        </Card>
 
-        <Input
-          label="E-mail"
-          value={userEmail}
-          onChangeText={setUserEmail}
-          placeholder="john.doe@example.com"
-        />
-        <ErrorMessage message={errors.userEmail} />
+        <Card
+          title="Administrador"
+          titleIcon={<Ionicons name="business" size={25} color="black" />}
+          style={{
+            marginTop: "10%",
+            marginBottom: "3%",
+            width: "100%",
+            height: "53%",
+            padding: 15,
+            backgroundColor: Colors.white,
+          }}
+        >
+          <Input
+            label="Nome Completo"
+            value={userName}
+            onChangeText={setUserName}
+            placeholder="John Doe"
+          />
+          <ErrorMessage message={errors.userName} />
+          <Input
+            label="Número de telefone"
+            value={userPhone}
+            onChangeText={setUserPhone}
+            placeholder="(11) 99999-9999"
+            numeric
+          />
+          <ErrorMessage message={errors.userPhone} />
 
-        <Input
-          label="Senha"
-          value={userPassword}
-          onChangeText={setUserPassword}
-          placeholder="********"
-          secureTextEntry
-        />
-        <ErrorMessage message={errors.userPassword} />
+          <Input
+            label="E-mail"
+            value={userEmail}
+            onChangeText={setUserEmail}
+            placeholder="john.doe@example.com"
+          />
+          <ErrorMessage message={errors.userEmail} />
 
-        <Input
-          label="Confirmação de senha"
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          placeholder="********"
-          secureTextEntry
-        />
-        <ErrorMessage message={errors.confirmPassword} />
-      </Card>
-      <Button text="Continuar" onPressFunction={handleContinue} />
-    </ScrollView>
+          <Input
+            label="Senha"
+            value={userPassword}
+            onChangeText={setUserPassword}
+            placeholder="********"
+            secureTextEntry
+          />
+          <ErrorMessage message={errors.userPassword} />
+
+          <Input
+            label="Confirmação de senha"
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            placeholder="********"
+            secureTextEntry
+          />
+          <ErrorMessage message={errors.confirmPassword} />
+        </Card>
+        <Button text="Continuar" onPressFunction={handleContinue} />
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -158,6 +170,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    marginBottom: "25%",
     backgroundColor: Colors.background,
   },
   scrollContent: {

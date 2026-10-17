@@ -19,7 +19,7 @@ class CompanyDataDto {
   name!: string;
 
   @IsString()
-  @Length(14, 14)
+  // @Length(14, 14)
   cnpj!: string;
 
   @IsString()
