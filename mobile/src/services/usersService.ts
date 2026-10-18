@@ -8,7 +8,7 @@ const login = async ({
   password: string;
 }) => {
   try {
-    const response = await apiClient.post("/login", { email, password });
+    const response = await apiClient.post("/users/login", { email, password });
     return response.data;
   } catch (error) {
     throw error;

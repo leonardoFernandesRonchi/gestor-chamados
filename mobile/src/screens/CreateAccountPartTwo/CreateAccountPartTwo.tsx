@@ -35,12 +35,14 @@ const CreateAccountPartTwo = () => {
   const [companyEmail, setCompanyEmail] = useState("");
   const [companyPhone, setCompanyPhone] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [error, setError] = useState(false);
 
   console.log("chegou aqui");
   console.log(formProps);
 
   const handleContinue = async () => {
     try {
+      setError(false);
       const data = {
         companyName,
         cnpj,
@@ -72,22 +74,8 @@ const CreateAccountPartTwo = () => {
 
       navigation.navigate("Login");
     } catch (error) {
-      if (error instanceof ValidationError) {
-        const validationErrors: Record<string, string> = {};
-
-        error.inner.forEach((item) => {
-          if (item.path) {
-            validationErrors[item.path] = item.message;
-          }
-        });
-
-        setErrors(validationErrors);
-      }
-      setSnackbar({
-        visible: true,
-        message: "Erro ao cadastrar empresa.",
-        type: "error",
-      });
+      setError(true);
+      console.error(error);
     }
   };
 
@@ -143,20 +131,17 @@ const CreateAccountPartTwo = () => {
           <ErrorMessage message={errors.companyEmail} />
         </Card>
         <Button text="Continuar" onPressFunction={handleContinue} />
-        {snackbar.visible && (
-          <View style={{ marginTop: "10%" }}>
-            <Snackbar
-              visible={snackbar.visible}
-              message={snackbar.message}
-              type={snackbar.type}
-              onDismiss={() =>
-                setSnackbar((prev) => ({
-                  ...prev,
-                  visible: false,
-                }))
-              }
-            />
-          </View>
+        {error && (
+          <Text
+            style={{
+              color: "red",
+              marginTop: 10,
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            Um erro ocorreu durante o processamento
+          </Text>
         )}
       </ScrollView>
     </KeyboardAvoidingView>
