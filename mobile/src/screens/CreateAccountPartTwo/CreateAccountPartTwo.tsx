@@ -37,9 +37,6 @@ const CreateAccountPartTwo = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [error, setError] = useState(false);
 
-  console.log("chegou aqui");
-  console.log(formProps);
-
   const handleContinue = async () => {
     try {
       setError(false);

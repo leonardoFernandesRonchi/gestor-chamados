@@ -39,6 +39,13 @@ export class UsersController {
     return this.usersService.create(dto, user, avatar);
   }
 
+  @Get('me')
+  @UseGuards(AuthGuard)
+  me(@CurrentUser() user: AuthenticatedUser) {
+    console.log(user);
+    return this.usersService.me(user);
+  }
+
   @Post('login')
   login(@Body() dto: loginDto) {
     return this.usersService.login(dto.email, dto.password);

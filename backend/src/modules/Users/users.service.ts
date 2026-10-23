@@ -113,4 +113,15 @@ export class UsersService {
       access_token: this.jwtService.sign(payload),
     };
   }
+
+  async me(user) {
+    const userToFind = await this.usersRepository.findOne({
+      where: { id: user.sub },
+      relations: {
+        company: true,
+        department: true,
+      },
+    });
+    return userToFind;
+  }
 }

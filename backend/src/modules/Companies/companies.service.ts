@@ -21,6 +21,15 @@ export class CompaniesService {
   ) {}
   async create(dto: CreateCompanyDto, avatar?: Express.Multer.File) {
     return this.companiesRepository.manager.transaction(async (manager) => {
+      const companyAlreadyExists = await manager.findOne(Company, {
+        where: {
+          cnpj: dto.company.cnpj,
+        },
+      });
+
+      if (companyAlreadyExists) {
+        throw new ConflictException('Cnpj em uso');
+      }
       const company = manager.create(Company, dto.company);
 
       const savedCompany = await manager.save(company);

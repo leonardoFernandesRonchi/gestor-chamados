@@ -15,6 +15,16 @@ const login = async ({
   }
 };
 
+const me = async () => {
+  try {
+    const response = await apiClient.get("/users/me");
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export default {
   login,
+  me,
 };

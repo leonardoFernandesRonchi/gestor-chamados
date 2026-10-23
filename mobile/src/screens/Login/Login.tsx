@@ -12,7 +12,11 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { usersService } from "@src/services";
 import axios from "axios";
+import { useAuth } from "@src/hooks/useAuth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const Login = () => {
+  const { login } = useAuth();
+
   const [email, setEmail] = useState("");
   const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
@@ -29,10 +33,15 @@ const Login = () => {
         email,
         password,
       };
-      await usersService.login({
+      const response = await usersService.login({
         email: email,
         password: password,
       });
+      await AsyncStorage.setItem("accessToken", response.access_token);
+
+      login();
+
+      navigation.navigate("HomeLogged");
     } catch (error) {
       setError(true);
       setSnackbar({
