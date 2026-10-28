@@ -118,10 +118,31 @@ export class UsersService {
     const userToFind = await this.usersRepository.findOne({
       where: { id: user.sub },
       relations: {
-        company: true,
+        company: {
+          departments: true,
+          company_settings: true,
+        },
         department: true,
       },
     });
-    return userToFind;
+
+    if (!userToFind) {
+      throw new NotFoundException('Usuário não encontrado');
+    }
+
+    const totalUsers = await this.usersRepository.count({
+      where: {
+        company: {
+          id: userToFind.company.id,
+        },
+      },
+    });
+    return {
+      ...userToFind,
+      company: {
+        ...userToFind.company,
+        totalUsers,
+      },
+    };
   }
 }

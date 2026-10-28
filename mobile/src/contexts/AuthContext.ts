@@ -1,5 +1,9 @@
 import { createContext } from "react";
 
+type Department = {
+  name: string;
+};
+
 type UserType = {
   id: string;
   name: string;
@@ -23,6 +27,8 @@ type UserType = {
     status: string;
     createdAt: string;
     updatedAt: string;
+    totalUsers: string;
+    departments: Department[];
   };
 
   department: {

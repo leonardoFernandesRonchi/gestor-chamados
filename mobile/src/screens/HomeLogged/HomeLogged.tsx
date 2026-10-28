@@ -13,24 +13,73 @@ import { AppRoutesProps } from "@src/navigation/AppRoutes";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { ValidationError } from "yup";
+import { useAuth } from "@src/hooks/useAuth";
 
 const HomeLogged = () => {
+  const { user } = useAuth();
+
+  const totalDepartments = user?.company.departments.length;
+
+  const totalUsers = user?.company?.totalUsers;
+
+  console.log(totalDepartments);
+
+  console.log("chegou aqui");
+  console.log(user);
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={"padding"}
       keyboardVerticalOffset={0}
     >
-      <ScrollView></ScrollView>
+      <ScrollView>
+        <View style={styles.containerFlex}>
+          <Card
+            style={{
+              width: "45%",
+              height: "100%",
+              padding: 20,
+              backgroundColor: Colors.white,
+            }}
+          ></Card>
+          <Card
+            style={{
+              width: "45%",
+              height: "100%",
+              padding: 20,
+              backgroundColor: Colors.white,
+            }}
+          ></Card>
+
+          <Card
+            style={{
+              width: "100%",
+              height: "100%",
+              padding: 20,
+              backgroundColor: Colors.white,
+            }}
+          ></Card>
+        </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
+  containerFlex: {
+    justifyContent: "center",
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: "5%",
+  },
   container: {
     flex: 1,
     padding: 20,
     marginBottom: "25%",
+    flexDirection: "row",
+    flexWrap: "wrap",
     backgroundColor: Colors.background,
   },
   scrollContent: {

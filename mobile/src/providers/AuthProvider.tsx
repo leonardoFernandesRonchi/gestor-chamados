@@ -14,11 +14,15 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const navigation = useNavigation<navigationProps>();
 
+  console.log("aaaa");
+
   const fetchUser = useCallback(async () => {
     try {
       setLoading(true);
 
       const response = await usersService.me();
+
+      console.log("aqui está a resposta" + response?.data);
 
       setUser(response?.data ?? null);
     } catch {

@@ -54,7 +54,7 @@ const AppRoutes = () => {
             name="HomeLogged"
             component={HomeLogged}
             options={{
-              title: "Preços e Compras",
+              title: "Home",
               headerStyle: {
                 backgroundColor: Colors.backgroundNavbar,
               },
