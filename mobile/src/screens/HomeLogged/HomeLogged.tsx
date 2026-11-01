@@ -6,60 +6,69 @@ import {
   View,
 } from "react-native";
 
-import { Card, Input, Button, ErrorMessage } from "@src/components";
+import { Card } from "@src/components";
 import Colors from "@src/constants/colors";
-import { useNavigation } from "@react-navigation/native";
-import { AppRoutesProps } from "@src/navigation/AppRoutes";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useState } from "react";
-import { ValidationError } from "yup";
 import { useAuth } from "@src/hooks/useAuth";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const HomeLogged = () => {
   const { user } = useAuth();
 
-  const totalDepartments = user?.company.departments.length;
+  const totalDepartments = user?.company?.departments?.length ?? 0;
 
-  const totalUsers = user?.company?.totalUsers;
+  const totalUsers = user?.company?.totalUsers ?? 0;
 
-  console.log(totalDepartments);
-
-  console.log("chegou aqui");
-  console.log(user);
+  const activeProjects = 0; // Implementar futuramente
 
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
-      behavior={"padding"}
+      behavior="padding"
       keyboardVerticalOffset={0}
     >
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.containerFlex}>
           <Card
-            style={{
-              width: "45%",
-              height: "100%",
-              padding: 20,
-              backgroundColor: Colors.white,
-            }}
-          ></Card>
-          <Card
-            style={{
-              width: "45%",
-              height: "100%",
-              padding: 20,
-              backgroundColor: Colors.white,
-            }}
-          ></Card>
+            title="Total de usuários"
+            titleIcon={
+              <MaterialIcons
+                name="people"
+                size={24}
+                color={Colors.textCardBlue}
+              />
+            }
+            content={String(totalUsers)}
+            style={styles.smallCard}
+            contentStyle={styles.number}
+          />
 
           <Card
-            style={{
-              width: "100%",
-              height: "100%",
-              padding: 20,
-              backgroundColor: Colors.white,
-            }}
-          ></Card>
+            title="Total de departamentos"
+            titleIcon={
+              <MaterialIcons
+                name="business"
+                size={24}
+                color={Colors.textCardBlue}
+              />
+            }
+            content={String(totalDepartments)}
+            style={styles.smallCard}
+            contentStyle={styles.number}
+          />
+
+          <Card
+            title="Projetos ativos"
+            titleIcon={
+              <MaterialIcons
+                name="folder"
+                size={24}
+                color={Colors.textCardBlue}
+              />
+            }
+            content="0"
+            style={styles.largeCard}
+            contentStyle={styles.number}
+          />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -68,58 +77,35 @@ const HomeLogged = () => {
 
 const styles = StyleSheet.create({
   containerFlex: {
+    flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "center",
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
     gap: "5%",
+    paddingHorizontal: 20,
   },
-  container: {
-    flex: 1,
+
+  smallCard: {
+    width: "47.5%",
+    height: 120,
     padding: 20,
-    marginBottom: "25%",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.white,
   },
+
+  largeCard: {
+    width: "100%",
+    height: 120,
+    padding: 20,
+    backgroundColor: Colors.white,
+  },
+
+  number: {
+    fontSize: 30,
+    fontWeight: "bold",
+    marginTop: 12,
+  },
+
   scrollContent: {
     paddingBottom: 40,
-  },
-  box: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 10,
-  },
-  containerIcons: {
-    marginTop: 30,
-    display: "flex",
-    flexDirection: "column",
-    gap: 10,
-  },
-  containerIcon: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  priceText: {
-    fontSize: 28,
-    fontWeight: "bold",
-    marginTop: 10,
-  },
-  textBlue: {
-    color: Colors.textCardBlue,
-    fontSize: 18,
   },
 });
 

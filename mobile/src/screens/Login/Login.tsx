@@ -17,6 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Login = () => {
   const { login } = useAuth();
 
+  const navigation = useNavigation<navigationProps>();
   const [email, setEmail] = useState("");
   const [error, setError] = useState(false);
   const [password, setPassword] = useState("");
@@ -54,8 +55,6 @@ const Login = () => {
   };
 
   type navigationProps = NativeStackNavigationProp<AppRoutesProps>;
-
-  const navigation = useNavigation<navigationProps>();
 
   return (
     <View style={styles.container}>
