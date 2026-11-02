@@ -41,9 +41,8 @@ const Login = () => {
       await AsyncStorage.setItem("accessToken", response.access_token);
 
       login();
-
-      navigation.navigate("HomeLogged");
     } catch (error) {
+      console.log(error);
       setError(true);
       setSnackbar({
         visible: true,

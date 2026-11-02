@@ -29,7 +29,7 @@ const HomeLogged = () => {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.containerFlex}>
           <Card
-            title="Total de usuários"
+            title="Usuários"
             titleIcon={
               <MaterialIcons
                 name="people"
@@ -43,7 +43,7 @@ const HomeLogged = () => {
           />
 
           <Card
-            title="Total de departamentos"
+            title="Departamentos"
             titleIcon={
               <MaterialIcons
                 name="business"
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
 
   smallCard: {
-    width: "47.5%",
+    width: "46.5%",
     height: 120,
     padding: 20,
     backgroundColor: Colors.white,
