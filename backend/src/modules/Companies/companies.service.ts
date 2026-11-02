@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
@@ -10,6 +10,8 @@ import { Department } from '@/modules/departments/entities/department.entity';
 import { CreateCompanyDto } from '@/modules/Companies/dto/create-company.dto';
 import { UpdateCompanyDto } from '@/modules/Companies/dto/update-company.dto';
 import { FileUploadService } from '@/modules/file-upload/file-upload.service';
+import { UsersService } from '@/modules/Users/users.service';
+import { AuthenticatedCompany } from '@/Guards/Auth/authenticated.company';
 
 @Injectable()
 export class CompaniesService {
@@ -18,6 +20,8 @@ export class CompaniesService {
     private readonly companiesRepository: Repository<Company>,
 
     private readonly fileUploadService: FileUploadService,
+
+    private readonly usersService: UsersService,
   ) {}
   async create(dto: CreateCompanyDto, avatar?: Express.Multer.File) {
     return this.companiesRepository.manager.transaction(async (manager) => {
@@ -111,5 +115,22 @@ export class CompaniesService {
         message: 'Company deleted successfully',
       };
     });
+  }
+
+  async getCompanyDetails(user, company, page: number, limit: number) {
+    const company_to_show = await this.companiesRepository.findOne({
+      where: { id: company.id },
+      relations: {
+        departments: true,
+        company_settings: true,
+      },
+    });
+
+    const users = await this.usersService.findByCompany(user, page, limit);
+
+    return {
+      company_to_show,
+      users,
+    };
   }
 }

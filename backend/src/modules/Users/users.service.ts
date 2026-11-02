@@ -145,4 +145,24 @@ export class UsersService {
       },
     };
   }
+
+  async findByCompany(user, page: number, limit: number) {
+    const [users, total] = await this.usersRepository.findAndCount({
+      where: {
+        company: {
+          id: user.companyId,
+        },
+      },
+      skip: (page - 1) * limit || 0,
+      take: limit,
+    });
+
+    return {
+      data: users,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
+  }
 }

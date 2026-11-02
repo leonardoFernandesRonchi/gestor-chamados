@@ -14,11 +14,19 @@ import {
   UseGuards,
   UseInterceptors,
   UploadedFile,
+  Get,
+  Query,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 
+import { CurrentCompany, CurrentUser } from '@/Guards/Auth/auth.decorator';
+
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import type { AuthenticatedCompany } from '@/Guards/Auth/authenticated.company';
 import { MulterConfig } from '@/config/multer.config';
 import { UserStatus } from '@/modules/Users/enums/user.enums';
+import { AuthGuard } from '@/Guards/Auth/auth.guard';
+import type { AuthenticatedUser } from '@/Guards/Auth/authenticated.user';
 
 @Controller('companies')
 @UseGuards(RolesGuard)
@@ -45,5 +53,17 @@ export class CompaniesController {
   @Roles(UserStatus.ADMIN, UserStatus.OWNER)
   delete(@Param('id') id: string) {
     return this.companiesService.destroy(id);
+  }
+
+  @Get()
+  @UseGuards(AuthGuard)
+  @UseInterceptors()
+  get(
+    @CurrentUser() user: AuthenticatedUser,
+    @CurrentCompany() company: AuthenticatedCompany,
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+  ) {
+    return this.companiesService.getCompanyDetails(user, company, page, limit);
   }
 }
