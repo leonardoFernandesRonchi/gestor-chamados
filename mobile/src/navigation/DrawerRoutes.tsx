@@ -6,7 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "@src/constants";
 import { useAuth } from "@src/hooks/useAuth";
 
-import { HomeLogged, Home, Users } from "@src/screens";
+import { HomeLogged, Home, Users, CreateUser } from "@src/screens";
 
 const permissions = {
   Home: ["admin", "manager", "user"],
@@ -62,6 +62,14 @@ const DrawerRoutes = () => {
         component={Users}
         options={{
           title: "Usuários",
+        }}
+      />
+
+      <Drawer.Screen
+        name="Criar Usuário"
+        component={CreateUser}
+        options={{
+          title: "Criar Usuário",
         }}
       />
 

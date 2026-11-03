@@ -4,3 +4,4 @@ export { default as CreateAccount } from "./CreateAccount";
 export { default as CreateAccountPartTwo } from "./CreateAccountPartTwo";
 export { default as Login } from "./Login";
 export { default as Users } from "./Users";
+export { default as CreateUser } from "./CreateUser";

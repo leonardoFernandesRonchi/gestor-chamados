@@ -8,6 +8,7 @@ import {
   CreateAccountPartTwo,
   Login,
   Users,
+  CreateUser,
 } from "@src/screens";
 
 import DrawerRoutes from "./DrawerRoutes";
@@ -21,6 +22,7 @@ export type AppRoutesProps = {
   Login: undefined;
   Users: undefined;
   CreateAccount: undefined;
+  CreateUser: undefined;
   CreateAccountPartTwo: {
     formProps: CreateAccountFormProps;
   };
@@ -70,6 +72,18 @@ const AppRoutes = () => {
             component={CreateAccount}
             options={{
               title: "Setup inicial",
+              headerStyle: {
+                backgroundColor: Colors.backgroundNavbar,
+              },
+              headerTitleAlign: "center",
+            }}
+          />
+
+          <Stack.Screen
+            name="CreateUser"
+            component={CreateUser}
+            options={{
+              title: "Criar usuário",
               headerStyle: {
                 backgroundColor: Colors.backgroundNavbar,
               },
