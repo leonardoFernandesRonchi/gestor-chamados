@@ -24,7 +24,39 @@ const me = async () => {
   }
 };
 
+const create = async ({
+  name,
+  email,
+  password,
+  phone,
+  department_id,
+  status,
+}: {
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+  department_id: string;
+  status: string;
+}) => {
+  try {
+    const formData = new FormData();
+
+    formData.append(
+      "user",
+      JSON.stringify({ name, email, password, phone, department_id, status }),
+    );
+
+    const response = await apiClient.post("/users", formData);
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export default {
+  create,
   login,
   me,
 };

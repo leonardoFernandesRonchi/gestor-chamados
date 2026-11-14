@@ -5,10 +5,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+      - "127.0.0.1:9229:9229"
+    command: npm run start:debug
     environment:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       CHOKIDAR_USEPOLLING: "true"
-      ATCHPACK_POLLING: "true"
+      WATCHPACK_POLLING: "true"
       JWT_SECRET: ${JWT_SECRET}
 
     volumes:

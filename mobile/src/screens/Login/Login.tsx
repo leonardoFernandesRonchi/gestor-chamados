@@ -14,9 +14,10 @@ import { usersService } from "@src/services";
 import axios from "axios";
 import { useAuth } from "@src/hooks/useAuth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useCompany } from "@src/hooks/useCompany";
 const Login = () => {
   const { login } = useAuth();
-
+  const { fetchCompany } = useCompany();
   const navigation = useNavigation<navigationProps>();
   const [email, setEmail] = useState("");
   const [error, setError] = useState(false);
@@ -41,6 +42,7 @@ const Login = () => {
       await AsyncStorage.setItem("accessToken", response.access_token);
 
       login();
+      fetchCompany();
     } catch (error) {
       console.log(error);
       setError(true);

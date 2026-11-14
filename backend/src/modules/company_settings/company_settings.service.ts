@@ -27,7 +27,6 @@ export class CompanySettingsService {
     company: Company,
     files?: Express.Multer.File[],
   ) {
-    console.log(files);
     const logo = files?.['logo'][0];
     const favicon = files?.['favicon'][0];
 

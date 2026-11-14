@@ -5,3 +5,5 @@ export { default as CreateAccountPartTwo } from "./CreateAccountPartTwo";
 export { default as Login } from "./Login";
 export { default as Users } from "./Users";
 export { default as CreateUser } from "./CreateUser";
+export { default as Departments } from "./Departments";
+export { default as CreateDepartment } from "./CreateDepartment";

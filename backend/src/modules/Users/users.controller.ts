@@ -42,7 +42,6 @@ export class UsersController {
   @Get('me')
   @UseGuards(AuthGuard)
   me(@CurrentUser() user: AuthenticatedUser) {
-    console.log(user);
     return this.usersService.me(user);
   }
 

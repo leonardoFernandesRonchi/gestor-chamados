@@ -72,4 +72,9 @@ const create = async ({
   return response.data;
 };
 
-export default { create };
+const get = async () => {
+  const response = await apiClient.get("/companies");
+  return response.data;
+};
+
+export default { create, get };

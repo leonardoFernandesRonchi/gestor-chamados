@@ -14,6 +14,7 @@ import bcrypt from 'bcrypt';
 import { Company } from '@/modules/Companies/entities/company.entity';
 import { Department } from '@/modules/departments/entities/department.entity';
 import { FileUploadService } from '@/modules/file-upload/file-upload.service';
+import { UserResponseDto } from '@/modules/Users/dto/user-response.dto';
 
 @Injectable()
 export class UsersService {
@@ -38,11 +39,15 @@ export class UsersService {
       },
     });
 
+    console.log('company', company);
+
     const department = await this.departmentsRepository.findOne({
       where: {
         id: dto.user.department_id,
       },
     });
+
+    console.log(department);
 
     const userAlreadyExists = await this.usersRepository.findOne({
       where: {
@@ -158,7 +163,14 @@ export class UsersService {
     });
 
     return {
-      data: users,
+      data: users.map((user): UserResponseDto => ({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        avatar_url: user.avatar_url,
+        status: user.status,
+        department_id: user.department_id,
+      })),
       total,
       page,
       limit,

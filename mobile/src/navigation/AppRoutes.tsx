@@ -9,6 +9,8 @@ import {
   Login,
   Users,
   CreateUser,
+  Departments,
+  CreateDepartment,
 } from "@src/screens";
 
 import DrawerRoutes from "./DrawerRoutes";
@@ -26,6 +28,8 @@ export type AppRoutesProps = {
   CreateAccountPartTwo: {
     formProps: CreateAccountFormProps;
   };
+  Departments: undefined;
+  CreateDepartment: undefined;
 
   navigate: () => void;
 };
@@ -46,13 +50,45 @@ const AppRoutes = () => {
   return (
     <Stack.Navigator key={user ? "authenticated" : "unauthenticated"}>
       {user ? (
-        <Stack.Screen
-          name="HomeLogged"
-          component={DrawerRoutes}
-          options={{
-            headerShown: false,
-          }}
-        />
+        <>
+          <Stack.Screen
+            name="HomeLogged"
+            component={DrawerRoutes}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Departments"
+            component={Departments}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="CreateUser"
+            component={CreateUser}
+            options={{
+              title: "Criar usuário",
+              headerStyle: {
+                backgroundColor: Colors.backgroundNavbar,
+              },
+              headerTitleAlign: "center",
+            }}
+          />
+
+          <Stack.Screen
+            name="CreateDepartment"
+            component={CreateDepartment}
+            options={{
+              title: "Criar departamento",
+              headerStyle: {
+                backgroundColor: Colors.backgroundNavbar,
+              },
+              headerTitleAlign: "center",
+            }}
+          />
+        </>
       ) : (
         <>
           <Stack.Screen
@@ -72,18 +108,6 @@ const AppRoutes = () => {
             component={CreateAccount}
             options={{
               title: "Setup inicial",
-              headerStyle: {
-                backgroundColor: Colors.backgroundNavbar,
-              },
-              headerTitleAlign: "center",
-            }}
-          />
-
-          <Stack.Screen
-            name="CreateUser"
-            component={CreateUser}
-            options={{
-              title: "Criar usuário",
               headerStyle: {
                 backgroundColor: Colors.backgroundNavbar,
               },
